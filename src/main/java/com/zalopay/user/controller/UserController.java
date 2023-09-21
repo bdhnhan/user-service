@@ -3,6 +3,7 @@ package com.zalopay.user.controller;
 import com.zalopay.user.business.UserBusiness;
 import com.zalopay.user.controller.request.LoginRequest;
 import com.zalopay.user.controller.response.ResultResponse;
+import com.zalopay.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResultResponse<String> login(@RequestBody LoginRequest request) {
+    public ResultResponse<User> login(@RequestBody LoginRequest request) {
         log.info("request :: {}", request);
         return userBusiness.login(request);
     }

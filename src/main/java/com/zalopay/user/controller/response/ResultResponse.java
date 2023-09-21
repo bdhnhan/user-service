@@ -7,5 +7,6 @@ import lombok.Data;
 @Builder
 public class ResultResponse<T> {
     private Long status;
+    private String message;
     private T result;
 }

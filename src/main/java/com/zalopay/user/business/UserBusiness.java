@@ -18,24 +18,31 @@ public class UserBusiness {
         this.userRepository = userRepository;
     }
 
-    public ResultResponse<String> login(LoginRequest request) {
+    public ResultResponse<User> login(LoginRequest request) {
         Optional<User> userOptional = userRepository.findFirstByPhoneNumber(request.getUsername());
         if (userOptional.isPresent()) {
             if (userOptional.get().getPassword().equals(request.getPassword())) {
-                return ResultResponse.<String>builder()
+                User user = new User();
+                user.setId(userOptional.get().getId());
+                user.setPhoneNumber(userOptional.get().getPhoneNumber());
+                user.setUsername(userOptional.get().getUsername());
+                return ResultResponse.<User>builder()
                         .status(200L)
-                        .result("SUCCESSFULLY")
+                        .message("SUCCESSFULLY")
+                        .result(user)
                         .build();
             } else {
-                return ResultResponse.<String>builder()
+                return ResultResponse.<User>builder()
                         .status(600L)
-                        .result("PASSWORD IS WRONG")
+                        .message("PASSWORD IS WRONG")
+                        .result(null)
                         .build();
             }
         } else {
-            return ResultResponse.<String>builder()
+            return ResultResponse.<User>builder()
                     .status(400L)
-                    .result("User not found!")
+                    .message("User not found")
+                    .result(null)
                     .build();
         }
     }
